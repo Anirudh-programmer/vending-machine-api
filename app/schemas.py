@@ -19,13 +19,13 @@ class SlotResponse(BaseModel):
 # --- Item ---
 class ItemCreate(BaseModel):
     name: str
-    price: int = Field(..., ge=0)  # Allow any non-negative price
+    price: int = Field(..., gt=0)  # Allow any non-negative price
     quantity: int = Field(..., gt=0)
 
 
 class ItemBulkEntry(BaseModel):
     name: str
-    price: int = Field(..., ge=0)  # Allow any non-negative price
+    price: int = Field(..., gt=0)  # Allow any non-negative price
     quantity: int = Field(..., gt=0)
 
 
@@ -43,7 +43,8 @@ class ItemResponse(BaseModel):
 
 
 class ItemDetailResponse(ItemResponse):
-    slot_id: str
+    slot_id: str | None
+
 
 
 class ItemPriceUpdate(BaseModel):
