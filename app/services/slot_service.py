@@ -31,8 +31,14 @@ def delete_slot(db: Session, slot_id: str) -> None:
     slot = get_slot_by_id(db, slot_id)
     if not slot:
         raise ValueError("slot_not_found")
+
+    # Prevent deleting slot if it still has items
+    if slot.items and len(slot.items) > 0:
+        raise ValueError("slot_not_empty")
+
     db.delete(slot)
     db.commit()
+
 
 
 def get_full_view(db: Session) -> list[SlotFullView]:
